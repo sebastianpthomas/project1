@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>details_ABC</title>
+</head>
+<body>
+<div class="container">
+<h2>Add Details</h2>
+
+<form method="post" id="personForm" data-cities-url="{% url 'ajax_load_cities' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+
+
+    <div>
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+      <label>
+  Account type :
+</label>
+<select name="dropdown2">
+    <option selected="selected"  disabled>Select Account type:</option>
+
+    <option value="10">Savings Account</option>
+    <option value="10">Current Account</option>
+</select>
+  </div>
+  </div>
+
+<div class="container">
+
+<label> Materials Provide </label>
+
+
+
+    <div>
+<div class="">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" >
+      <label class="form-check-label" >
+        Debit Card
+      </label>
+    </div>
+  </div>
+
+
+  <div class="">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" ">
+      <label class="form-check-label" for="invalidCheck2">
+        Credit Card
+      </label>
+    </div>
+  </div>
+  <div class="">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2">
+      <label class="form-check-label" for="invalidCheck2">
+        Cheque Book
+      </label>
+
+    </div>
+
+  </div>
+        </div>
+
+    </div>
+
+
+    <input  type="submit" value="Submit">
+
+
+</form>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_district").change(function () {
+        const url = $("#personForm").attr("data-cities-url");  // get the url of the `load_branches` view
+        const districtId = $(this).val();  // get the selected district ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'district_id': districtId       // add the district id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_branches` view function
+                $("#id_branch").html(data);  // replace the contents of the branch input with the data that came from the server
+                /*
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (branch) {
+                    html_data += `<option value="${branch.id}">${branch.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_branch").html(html_data);
+                */
+            }
+        });
+
+    });
+</script>
+
+
+
+</body>
+</html>
